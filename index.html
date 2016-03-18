@@ -6,16 +6,18 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
 	<script src="app.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="app.css">
+
 </head>
 <body>
 
 	<div ng-controller="DivControll">
 		
 		Como você está <input type="text" ng-model="nome"><br>
-
 		<h4> Eu estou bem {{nome}}! e você? </h4>
 
-		<h6> Lendo nome de novo: {{ lerNome() }}!
+		<h6> Lendo nome de novo: {{ lerNome() }}!</h6>
 
 	</div>
 
@@ -33,7 +35,7 @@
 
 	<h4>Lista de Tarefas</h4>
 
-	<div ng-controller="TarefasControll" class="todo">
+	<div ng-controller="TarefasControll" class="todo classDivControll">
 		<span>{{restante()}} de {{todos.lenght}} restante</span>
 
 		<ul class="unstyled">
@@ -50,6 +52,6 @@
 		</form>
 
 	</div>
-	
+
 </body>
 </html>

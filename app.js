@@ -21,7 +21,6 @@ var PaisesControll = function($scope){
 
 var TarefasControll = function($scope){
 
-
 	$scope.todos = [
 
 		{
