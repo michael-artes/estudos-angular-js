@@ -65,6 +65,6 @@ var TarefasControll = function($scope){
 	}
 }
 
-app.controller('DivControll', DivControll);
-app.controller('PaisesControll', PaisesControll);
-app.controller('TarefasControll', TarefasControll);
+app.controller('DivControll', DivControll)
+   .controller('PaisesControll', PaisesControll)
+   .controller('TarefasControll', TarefasControll);
