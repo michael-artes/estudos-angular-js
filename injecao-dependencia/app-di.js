@@ -1,25 +1,26 @@
 
-angular.module('angularDI', [])
-	   .factory('sobreFilme', function($window){
+var app = angular.module('AngularDI', [])
+							   .factory('sobreFilme', function($window){
 
-	   		return {
+							   		return {
 
-	   			exibir: function(text){
-	   				$window.alert(text);
-	   			}
-	   		}
+							   			exibir: function(text){
+							   				$window.alert(text);
+							   			}
+							   		}
 
-	   });
+							   });
 
 
+var filmeControler = function($scope, sobreFilme){
 
-function FilmeControll($scope, sobreFilme) {
-	$scope.falaFilme = function() {
-		sobreFilme.exibir('Nome do filme é ...1');
-	}
-}
+	$scope.falaFilme = function(){
+		sobreFilme.exibir('O nome do filme é...');
+	};
 
-var injector = angular.injector(['ng', 'angularDI']);
-var sobreFilme = injector.get('sobreFilme');
+};
 
-injector.instantiate(FilmeControll);
+app.controller('FilmeControll', filmeControler);
+
+var injetor = angular.injector(['AngularDI','ng']);
+injetor.instantiate(FilmeControll);

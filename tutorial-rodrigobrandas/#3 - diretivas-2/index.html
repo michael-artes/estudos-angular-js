@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html ng-app="listaTelefonicaApp" lang="pt">
+<head>
+	<title>Angular Diretivas 1</title>
+	<meta charset="UTF-8">
+
+	<link rel="stylesheet" type="text/css" href="../lib-config/bootstrap/css/bootstrap.css">
+	<script src="../lib-config/angular/angular.js"></script>
+
+	<style type="text/css">
+
+		.jumbotron{
+
+			text-align: center;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 20px;
+			width: 400px;
+			padding: 20px;
+
+		}
+
+		.table{
+
+			margin-top: 20px;
+
+		}
+
+		.table td{
+			text-align: left;
+		}
+
+		.form-control{
+
+			margin-bottom: 10px;
+		}
+
+	</style>
+
+	<script type="text/javascript">
+
+		angular.module('listaTelefonicaApp', []);
+		angular.module('listaTelefonicaApp').controller('listaTelefonicaCtrl', function($scope){
+
+				$scope.hello = "Lista Telefônica";
+
+				$scope.contatos = [
+
+					{nome: "Michael", telefone: "9999-8888", cor: "blue"},
+					{nome: "Cássia", telefone: "9999-8877", cor: "black"},
+					{nome: "Pedro", telefone: "9999-8844", cor: "red"},
+					{nome: "Maria", telefone: "9999-8348", cor: "gray"}
+
+				];
+
+				$scope.operadoras = [
+						{nome: "OI", codigo: 14, categoria: "Celular"},
+						{nome: "VIVO", codigo: 15, categoria: "Celular"},
+						{nome: "CLARO", codigo: 16, categoria: "Celular"},
+						{nome: "GVT", codigo: 25, categoria: "Fixo"},
+						{nome: "Embratel", codigo: 21, categoria: "Fixo"}
+				];
+
+				$scope.adicionarContato = function(contato){
+
+					$scope.contatos.push(angular.copy(contato));
+
+					delete $scope.contato;
+				};
+
+				$scope.apagarContato = function(contatos){
+
+						$scope.contatos = contatos.filter(function(contato) {
+								if (!contato.selecionado) {
+										return contato;
+								}
+						});
+				};
+
+				$scope.isContatosSelecionados = function(contatos){
+
+					  var isSelecionado = contatos.some(function(contato) {
+									return contato.selecionado;
+						});
+
+						return isSelecionado;
+				};
+
+		});
+
+	</script>
+
+</head>
+<body ng-controller="listaTelefonicaCtrl">
+
+	<div class="jumbotron">
+		<h4>{{hello}}</h4>
+
+		{{contato}}
+
+		<table class="table table" ng-show="contatos.length > 0">
+			<tr>
+				<th></th>
+				<th>Nome</th>
+				<th>Telefone</th>
+				<th>Operadora</th>
+			</tr>
+
+			<!-- Posso aplicar um ng-class, tanto array [] como um somente um, e
+			manipulá-lo com $scope no JS.
+
+			ex:
+			html -> ng-class="selecionado"
+			js   -> $scope.selecionado: "classSelecionado"
+			css  -> classSelecionado { backgroung-color: red }
+
+			-->
+
+			<tr ng-class="{'bg-warning': contato.selecionado}"
+					ng-repeat="contato in contatos">
+
+				<td> <input type="checkbox" ng-model="contato.selecionado"> </td>
+				<td> {{contato.nome}} </td>
+				<td> {{contato.telefone}} </td>
+				<td> {{contato.operadora.nome}} </td>
+				<td> <div style="width: 20px; height: 20px;" ng-style="{'background-color': contato.cor}"> <div> </td>
+			</tr>
+		</table>
+
+		<hr>
+
+		<input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome...">
+		<input class="form-control" type="text" ng-model="contato.telefone" placeholder="Telefone...">
+
+		<hr>
+
+		<!-- O as do operadora.codigo significa que o value será o código!
+			ex: ng-options="operadora.codigo as operadora.nome for operadora in operadoras"
+		-->
+		<select class="form-control"
+						ng-model="contato.operadora"
+						ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
+
+				<option value=""> -- Selectione uma Operadora -- </option>
+
+		</select>
+
+		<button ng-click="adicionarContato(contato)"
+						ng-disabled="!contato.nome || !contato.telefone"
+						class="btn btn-primary btn-block">
+
+						Add Contato
+		</button>
+
+		<button ng-click="apagarContato(contatos)"
+						ng-disabled="!isContatosSelecionados(contatos)"
+						class="btn btn-danger btn-block">
+
+						Delete Contato
+		</button>
+
+	</div>
+
+	<!--
+		<div ng-include="'rodape.html'">
+		div>
+		O google chrome bloqueia por questões de politica!!!
+	-->
+
+
+</body>
+</html>
