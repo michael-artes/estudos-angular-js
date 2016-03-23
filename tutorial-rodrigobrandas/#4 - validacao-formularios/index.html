@@ -6,6 +6,7 @@
 
 	<link rel="stylesheet" type="text/css" href="../lib-config/bootstrap/css/bootstrap.css">
 	<script src="../lib-config/angular/angular.js"></script>
+	<script src="../lib-config/angular/angular-messages.js"></script>
 
 	<style type="text/css">
 
@@ -39,7 +40,7 @@
 
 	<script type="text/javascript">
 
-		angular.module('listaTelefonicaApp', []);
+		angular.module('listaTelefonicaApp', ['ngMessages']);
 		angular.module('listaTelefonicaApp').controller('listaTelefonicaCtrl', function($scope){
 
 				$scope.hello = "Lista Telefônica";
@@ -134,10 +135,10 @@
 		<form name="contatoForm">
 
 			<input class="form-control" type="text" name="nome" placeholder="Nome..."
-		   			 ng-model="contato.nome" ng-required="true">
+		   			 ng-model="contato.nome" ng-required="true" ng-minlength="10">
 
 			<input class="form-control" type="text" name="telefone" placeholder="Telefone..."
-						 ng-model="contato.telefone" ng-required="true">
+						 ng-model="contato.telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/">
 
 			<hr>
 
@@ -153,16 +154,30 @@
 			</select>
 
 
-			<div ng-show="contatoForm.$invalid"
+			<div ng-messages="contatoForm.nome.$error"
 					 class="alert alert-danger"
 				   style="text-align: left;">
 
-					<p ng-show="contatoForm.nome.$invalid && contatoForm.nome.$dirty">
+					<p ng-message="required" ng-show="contatoForm.nome.$dirty">
 							O campo nome é requerido!
 					</p>
-					<p ng-show="contatoForm.telefone.$invalid && contatoForm.telefone.$dirty">
-							O campo telefone é requerido!
+					<p ng-message="minlength">
+						O campo nome deve ter no minimo 10 caracteres!
 					</p>
+
+			</div>
+
+			<div ng-messages="contatoForm.telefone.$error"
+					 class="alert alert-danger"
+				   style="text-align: left;">
+
+					<p ng-message="required" ng-show="contatoForm.telefone.$dirty">
+						O campo telefone é requerido!
+					</p>
+					<p ng-message="pattern">
+						O campo telefone ter o padrão de 9999-9999
+					</p>
+
 			</div>
 
 		</form>
