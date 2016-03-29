@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="firstAppAngular">
+<head>
+	<title>Olá mundo angular</title>
+	<meta charset="utf-8"></head>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+	<script src="app.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="app.css">
+
+</head>
+<body>
+
+	<div ng-controller="DivControll">
+		
+		Como você está <input type="text" ng-model="nome"><br>
+		<h4> Eu estou bem {{nome}}! e você? </h4>
+
+		<h6> Lendo nome de novo: {{ lerNome() }}!</h6>
+
+	</div>
+
+	<ul ng-controller="PaisesControll">
+		<li ng-repeat="pais in paises">
+				{{pais.nome}} tem a populacao de {{pais.populacao}}
+		</li>
+
+		<hr>
+
+		População no mundo total: {{populacao}}
+	</ul>
+
+	<br><hr>
+
+	<h4>Lista de Tarefas</h4>
+
+	<div ng-controller="TarefasControll" class="todo classDivControll">
+		<span>{{restante()}} de {{todos.lenght}} restante</span>
+
+		<ul class="unstyled">
+			<li ng-repeat="todo in todos">
+				<input type="checkbox" ng-model="todo.feito">
+				<span class="feito-{{todo.feito}}"> {{todo.tarefa}} </span>
+
+			</li>
+		</ul>
+
+		<form ng-submit="addTodo()">
+			<input type="text" ng-model="todoText" size="30" placeholder="Adicionar Tarefas">
+			<input class="btn" type="submit" value="Adicionar">
+		</form>
+
+	</div>
+
+</body>
+</html>
