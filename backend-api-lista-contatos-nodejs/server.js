@@ -6,9 +6,9 @@ app.use(bodyParser.json());
 app.set('json spaces', 2);
 
 var contatos = [
-				{nome: "Michael", telefone: "9999-2222", data: new Date(), operadora: {nome: "Oi", codigo: 14, categoria: "Celular"}},
-				{nome: "Cássia", telefone: "9999-3333", data: new Date(), operadora: {nome: "Vivo", codigo: 15, categoria: "Celular"}},
-				{nome: "Noeme", telefone: "9999-9999", data: new Date(), operadora: {nome: "Tim", codigo: 41, categoria: "Celular"}}
+				{nome: "michael douglas", telefone: "9999-2222", data: new Date(), operadora: {nome: "Oi", codigo: 14, categoria: "Celular"}},
+				{nome: "cássia suellem da silva", telefone: "9999-3333", data: new Date(), operadora: {nome: "Vivo", codigo: 15, categoria: "Celular"}},
+				{nome: "noeme de moura", telefone: "9999-9999", data: new Date(), operadora: {nome: "Tim", codigo: 41, categoria: "Celular"}}
 			];
 
 var operadoras = [
