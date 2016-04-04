@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html ng-app="listaTelefonicaApp" lang="pt">
+<head>
+	<title>Angular Diretivas 1</title>
+	<meta charset="UTF-8">
+
+	<link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.css">
+	<script src="libs/jquery/jquery.min.js"></script>
+	<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+
+
+	<script src="libs/angular/angular.js"></script>
+	<script src="libs/angular/i18n/angular-locale_pt-br.js"></script>
+	<script src="libs/angular/angular-messages.js"></script>
+
+	<script src="js/app.js"></script>
+	<script src="js/controllers/listaTelefonicaCtrl.js"></script>
+	<script src="js/services/contatosAPI.js"></script>
+
+	<script src="js/filters/LetterFirstUpper.js"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="css/app.css">
+
+</head>
+<body ng-controller="listaTelefonicaCtrl">
+
+	<div class="jumbotron">
+		<h4>{{hello}}</h4>
+
+
+		<div class="alert alert-info">
+	    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	    <strong>Success!</strong> This alert box could indicate a successful or positive action.
+	  </div>
+
+
+		<input class="form-control" placeholder="O que você está buscando? ..." ng-model="criteriaDeBusca">
+
+		<table class="table table" ng-show="contatos.length > 0">
+			<tr>
+				<th></th>
+				<th>Nome  <a href="#" ng-click="ordenarPor('nome')"> <span class="glyphicon glyphicon-sort-by-attributes"></span> </a> </th>
+				<th>Telefone <a href="#" ng-click="ordenarPor('telefone')"> <span class="glyphicon glyphicon-sort-by-attributes"></span> </a></th>
+				<th>Operadora</th>
+				<th>Data</th>
+			</tr>
+
+			<!-- Posso aplicar um ng-class, tanto array [] como um somente um, e
+			manipulá-lo com $scope no JS.
+
+			ex:
+			html -> ng-class="selecionado"
+			js   -> $scope.selecionado: "classSelecionado"
+			css  -> classSelecionado { backgroung-color: red }
+
+			-->
+
+			<tr ng-class="{'bg-warning': contato.selecionado}"
+					ng-repeat="contato in contatos | filter:{nome: criteriaDeBusca} | orderBy:criteriaDeOrdenacao:direcaoOrderBy">
+
+				<td> <input type="checkbox" ng-model="contato.selecionado"> </td>
+				<td> {{contato.nome | uppercase | letterFirstUpper}} </td>
+				<td> {{contato.telefone}} </td>
+				<td> {{contato.operadora.nome | lowercase}} </td>
+				<td> {{contato.data | date:'dd/MM/yy HH:mm'}} </td>
+			</tr>
+		</table>
+
+		<hr>
+
+		<form name="contatoForm">
+
+			<input class="form-control" type="text" name="nome" placeholder="Nome..."
+		   			 ng-model="contato.nome" ng-required="true" ng-minlength="10">
+
+			<input class="form-control" type="text" name="telefone" placeholder="Telefone..."
+						 ng-model="contato.telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/">
+
+			<hr>
+
+			<!-- O as do operadora.codigo significa que o value será o código!
+			ex: ng-options="operadora.codigo as operadora.nome for operadora in operadoras"
+			-->
+			<select class="form-control"
+							ng-model="contato.operadora"
+							ng-options="operadora.nome + '( ' + (operadora.preco | currency) + ' )'
+							group by operadora.categoria for operadora in operadoras | orderBy:'nome'">
+
+							<option value=""> -- Selectione uma Operadora -- </option>
+
+			</select>
+
+
+			<div ng-messages="contatoForm.nome.$error"
+					 class="alert alert-danger"
+				   style="text-align: left;">
+
+					<p ng-message="required" ng-show="contatoForm.nome.$dirty">
+							O campo nome é requerido!
+					</p>
+					<p ng-message="minlength">
+						O campo nome deve ter no minimo 10 caracteres!
+					</p>
+
+			</div>
+
+			<div ng-messages="contatoForm.telefone.$error"
+					 class="alert alert-danger"
+				   style="text-align: left;">
+
+					<p ng-message="required" ng-show="contatoForm.telefone.$dirty">
+						O campo telefone é requerido!
+					</p>
+					<p ng-message="pattern">
+						O campo telefone ter o padrão de 9999-9999
+					</p>
+
+			</div>
+
+		</form>
+
+		<button ng-click="adicionarContato(contato)"
+						ng-disabled="contatoForm.$invalid"
+						class="btn btn-primary btn-block">
+
+						Add Contato
+		</button>
+
+		<button ng-click="apagarContato(contatos)"
+						ng-disabled="!isContatosSelecionados(contatos)"
+						class="btn btn-danger btn-block">
+
+						Delete Contato
+		</button>
+
+		<!-- <br>
+			{{100.66 | number:2}}
+		-->
+
+	</div>
+
+	<!--
+		<div ng-include="'rodape.html'">
+		div>
+		O google chrome bloqueia por questões de politica!!!
+	-->
+
+
+</body>
+</html>
