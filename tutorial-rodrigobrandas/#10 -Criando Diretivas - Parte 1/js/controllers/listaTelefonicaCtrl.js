@@ -2,6 +2,8 @@ angular.module('listaTelefonicaApp').controller('listaTelefonicaCtrl', function(
 
     $scope.hello = "Lista Telefônica";
 
+    $scope.title = "teste teste";
+
     $scope.operadoras = [];
 
     // Ex: $filter("lowercase")("Michael")
@@ -19,7 +21,9 @@ angular.module('listaTelefonicaApp').controller('listaTelefonicaCtrl', function(
 
         contatosAPI.getContatos().success(function(data, status){
           $scope.contatos = data;
-        });
+        }).error(function (data, status) {
+    			$scope.error = "Não foi possível carregar os dados!";
+    		});
     };
 
     $scope.adicionarContato = function(contato){
