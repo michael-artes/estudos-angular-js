@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="listaTelefonicaApp" lang="pt">
 <head>
-	<title>Angular Diretivas 1</title>
+	<title>{{hello}}</title>
 	<meta charset="UTF-8">
 
 	<link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.css">
@@ -12,6 +12,10 @@
 	<script src="js/app.js"></script>
 	<script src="js/controllers/listaTelefonicaCtrl.js"></script>
 	<script src="js/services/contatosAPI.js"></script>
+	<script src="js/services/operadorasAPI.js"></script>
+	<script src="js/services/serialGeneratorProvider.js"></script>
+	<script src="js/config/serialGeneratorProviderConfig.js"></script>
+	<script src="js/values/configUtil.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="css/app.css">
 
@@ -26,6 +30,7 @@
 		<table class="table table" ng-show="contatos.length > 0">
 			<tr>
 				<th></th>
+				<th>Serial</th>
 				<th>Nome  <a href="#" ng-click="ordenarPor('nome')"> <span class="glyphicon glyphicon-sort-by-attributes"></span> </a> </th>
 				<th>Telefone <a href="#" ng-click="ordenarPor('telefone')"> <span class="glyphicon glyphicon-sort-by-attributes"></span> </a></th>
 				<th>Operadora</th>
@@ -46,6 +51,7 @@
 					ng-repeat="contato in contatos | filter:{nome: criteriaDeBusca} | orderBy:criteriaDeOrdenacao:direcaoOrderBy">
 
 				<td> <input type="checkbox" ng-model="contato.selecionado"> </td>
+				<td> {{contato.serial}} </td>
 				<td> {{contato.nome | uppercase}} </td>
 				<td> {{contato.telefone}} </td>
 				<td> {{contato.operadora.nome | lowercase}} </td>
