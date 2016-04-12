@@ -2,6 +2,9 @@ angular.module("listaTelefonicaApp").directive("uiAcordions", function(){
 
   return {
 
+    transclude: true,
+    templateUrl: "views/accordions.html",
+
     controller: function($scope, $element, $attrs){
 
         var elements = [];
@@ -14,10 +17,7 @@ angular.module("listaTelefonicaApp").directive("uiAcordions", function(){
 
           elements.forEach(function(elementAccordion){
 
-            elementAccordion.addClass("collapsed");
-            elementAccordion.prop("aria-expanded", false);
-
-            var divElement = elementAccordion.children().children().children().next();
+            var divElement = elementAccordion.children().children().next();
 
             console.log(divElement);
             divElement.removeClass("in");
@@ -35,7 +35,7 @@ angular.module("listaTelefonicaApp").directive("uiAcordions", function(){
 angular.module("listaTelefonicaApp").directive("uiAcordion", function(){
 
   return {
-    templateUrl: "views/accordion-bootstrap.html",
+    templateUrl: "views/accordion.html",
     scope: {
       title: "@",
       idAcordion: "@id",
