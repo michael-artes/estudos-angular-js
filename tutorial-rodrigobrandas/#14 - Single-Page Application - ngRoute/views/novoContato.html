@@ -1,0 +1,71 @@
+<div class="jumbotron">
+    <form name="contatoForm">
+
+      <input class="form-control" type="text" name="nome" placeholder="Nome..."
+      ng-model="contato.nome" ng-required="true" ng-minlength="10">
+
+      <input class="form-control" type="text" name="telefone" placeholder="Telefone..."
+      ng-model="contato.telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/">
+
+      {{contato.data}}
+
+      <input class="form-control" type="text" name="data" placeholder="Data..."
+      ng-model="contato.data" ui-masck-date />
+
+      <hr>
+
+      <!-- O as do operadora.codigo significa que o value será o código!
+      ex: ng-options="operadora.codigo as operadora.nome for operadora in operadoras"
+    -->
+    <select class="form-control"
+    ng-model="contato.operadora"
+    ng-options="operadora.nome + '( ' + (operadora.preco | currency) + ' )'
+    group by operadora.categoria for operadora in operadoras | orderBy:'nome'">
+
+    <option value=""> -- Selectione uma Operadora -- </option>
+
+    </select>
+
+
+    <div ng-messages="contatoForm.nome.$error"
+    class="alert alert-danger"
+    style="text-align: left;">
+
+    <p ng-message="required" ng-show="contatoForm.nome.$dirty">
+    O campo nome é requerido!
+    </p>
+    <p ng-message="minlength">
+    O campo nome deve ter no minimo 10 caracteres!
+    </p>
+
+    </div>
+
+    <div ng-messages="contatoForm.telefone.$error"
+    class="alert alert-danger"
+    style="text-align: left;">
+
+    <p ng-message="required" ng-show="contatoForm.telefone.$dirty">
+    O campo telefone é requerido!
+    </p>
+    <p ng-message="pattern">
+    O campo telefone ter o padrão de 9999-9999
+    </p>
+
+    </div>
+
+    </form>
+
+    <button ng-click="adicionarContato(contato)"
+    ng-disabled="contatoForm.$invalid"
+    class="btn btn-primary btn-block">
+
+    Add Contato
+    </button>
+
+    <button ng-click="apagarContato(contatos)"
+    ng-disabled="!isContatosSelecionados(contatos)"
+    class="btn btn-danger btn-block">
+
+    Delete Contato
+    </button>
+</div>

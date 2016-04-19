@@ -1,0 +1,48 @@
+<div class="jumbotron">
+  <h4>{{hello}}</h4>
+
+  <input class="form-control" placeholder="O que você está buscando? ..." ng-model="criteriaDeBusca">
+
+  <table class="table table" ng-show="contatos.length > 0">
+    <tr>
+      <th></th>
+      <th>Serial</th>
+      <th>Nome  <a href="#" ng-click="ordenarPor('nome')"> <span class="glyphicon glyphicon-sort-by-attributes"></span> </a> </th>
+      <th>Telefone <a href="#" ng-click="ordenarPor('telefone')"> <span class="glyphicon glyphicon-sort-by-attributes"></span> </a></th>
+      <th>Operadora</th>
+      <th>Data</th>
+    </tr>
+
+    <!--
+
+    Posso aplicar um ng-class, tanto array [] como um somente um, e
+    manipulá-lo com $scope no JS.
+
+    ex:
+    html -> ng-class="selecionado"
+    js   -> $scope.selecionado: "classSelecionado"
+    css  -> classSelecionado { backgroung-color: red }
+
+    -->
+
+    <tr ng-class="{'bg-warning': contato.selecionado}"
+        ng-repeat="contato in contatos | filter:{nome: criteriaDeBusca} | orderBy:criteriaDeOrdenacao:direcaoOrderBy">
+
+      <td> <input type="checkbox" ng-model="contato.selecionado"> </td>
+      <th> {{contato.serial}} </th>
+      <td> {{contato.nome | uppercase | letterFirstUpper}} </td>
+      <td> {{contato.telefone}} </td>
+      <td> {{contato.operadora.nome | lowercase}} </td>
+      <td> {{contato.data | date:'dd/MM/yy HH:mm'}} </td>
+    </tr>
+  </table>
+
+  <hr>
+
+  <a class="btn btn-primary btn-block" href="#/novoContato">Novo Contato</a>
+
+  <!-- <br>
+    {{100.66 | number:2}}
+  -->
+
+</div>
